@@ -1,0 +1,103 @@
+.AUTODEPEND
+
+#	*Translator Definitions*
+CC = bcc +srgp.cfg
+TASM = tasm
+TLIB = tlib
+TLINK = tlink
+LIBPATH = c:\bc\lib;.
+INCLUDEPATH = c:\bc\include;c:\sphigwin\include
+
+#	*List Macros*
+LINKEXC = srgp.res
+
+#	*Implicit Rules*
+.c.obj:
+	$(CC) -c {$< }
+
+.cpp.obj:
+	$(CC) -c {$< }
+
+.obj.exe:
+	$(TLINK) /v/x/c/P-/Twe/L$(LIBPATH) @&&|
+c0wl.obj+
+libdmp.obj+
+libinf.obj+
+libini.obj+
+libply.obj+
+libpr1.obj+
+libpr2.obj+
+libpr3.obj+
+libvec.obj+
+drv_srgp.obj+
+$*.obj
+$*
+	# no map file
+winsrgp.lib+
+mathwl.lib+
+import.lib+
+cwl.lib
+srgp.def
+|
+	rc -K srgp.res $*.exe
+
+all:	srgp.cfg objs \
+	balls.exe gears.exe mount.exe rings.exe teapot.exe tetra.exe \
+	tree.exe readdxf.exe readnff.exe sample.exe lattice.exe shells.exe
+
+objs:	libdmp.obj libinf.obj libini.obj libply.obj \
+	libpr1.obj libpr2.obj libpr3.obj libvec.obj drv_srgp.obj
+
+clean:
+	@del balls.exe >nul
+	@del gears.exe >nul
+	@del mount.exe >nul
+	@del rings.exe >nul
+	@del teapot.exe >nul
+	@del tetra.exe >nul
+	@del tree.exe >nul
+	@del readdxf.exe >nul
+	@del readnff.exe >nul
+	@del sample.exe >nul
+	@del lattice.exe >nul
+	@del shells.exe >nul
+	@del *.obj >nul
+	@echo Clean done.
+
+#	*Individual File Dependencies*
+
+#srgp.res: srgp.cfg srgp.rc 
+#	rc -R -I$(INCLUDEPATH) -FO srgp.res srgp.rc
+
+#	*Compiler Configuration File*
+srgp.cfg:
+	@copy &&|
+-R
+-ml!
+-3
+-v
+-G
+-O
+-Og
+-Oe
+-Om
+-Ov
+-Ol
+-Op
+-Oi
+-Z
+-d
+-W
+-vi-
+-w-par
+-w-pro
+-weas
+-wpre
+-w-rpt
+-w-pia
+-I$(INCLUDEPATH)
+-L$(LIBPATH)
+-DIBM_PC
+-P-.C
+-D_Windows
+| srgp.cfg >nul
